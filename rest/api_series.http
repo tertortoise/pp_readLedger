@@ -1,0 +1,12 @@
+POST http://localhost:8080/series/findAll HTTP/1.1
+content-type: application/json
+
+
+###
+POST http://localhost:8080/series/add HTTP/1.1
+content-type: application/json
+
+{
+
+  "seriesTitle": "Series 1"
+}

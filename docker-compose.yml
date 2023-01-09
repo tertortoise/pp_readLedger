@@ -10,7 +10,7 @@ services:
   db:
     container_name: readledger_pg
     image: postgres:14.1-alpine
-    restart: always
+    restart: "no"
     environment:
       - POSTGRES_DB=testdb
       - POSTGRES_USER=testuser
@@ -34,7 +34,7 @@ services:
       - pgadminvolume:/var/lib/pgadmin
     ports:
       - "5050:80"
-    restart: unless-stopped
+    restart: "no"
 volumes:
   pgvolume:
     driver: local

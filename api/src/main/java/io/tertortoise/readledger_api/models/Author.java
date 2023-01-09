@@ -21,7 +21,7 @@ public class Author {
     @Column(name="id", nullable = false, updatable = false)
     private UUID id;
 
-    @NotBlank(message="resource path is mandatory")
+    @NotBlank(message="author name is mandatory")
     @Column(name="author_name", nullable = false, columnDefinition = "text")
     private String authorName;
 
