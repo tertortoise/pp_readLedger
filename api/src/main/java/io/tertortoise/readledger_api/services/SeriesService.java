@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -16,6 +17,12 @@ public class SeriesService {
     public List<Series> findAll() {
 
         return seriesRepository.findAll();
+
+    }
+
+    public Optional<Series> findById(UUID id) {
+
+        return seriesRepository.findById(id);
 
     }
 

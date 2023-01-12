@@ -1,0 +1,31 @@
+### findAll
+POST http://localhost:8080/comments-series/findAll HTTP/1.1
+content-type: application/json
+
+
+### add
+POST http://localhost:8080/comments-series/add HTTP/1.1
+content-type: application/json
+
+{
+  "commentContent": "correct comment to series 1",
+  "seriesId": "2aed2e54-70ef-4a90-a7e3-259c1bba2402"
+}
+
+### findBySeries
+POST http://localhost:8080/comments-series/findBySeries HTTP/1.1
+content-type: application/json
+
+{
+  "ids": ["559cfd59-d917-4d3a-9d25-69b89424968f"]
+}
+
+### update
+POST http://localhost:8080/comments-series/update HTTP/1.1
+content-type: application/json
+
+{
+  "id": "17e98420-2b84-4ab4-827c-4d4a36377232",
+  "content": "new content"
+}
+

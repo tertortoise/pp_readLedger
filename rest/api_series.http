@@ -1,12 +1,13 @@
+### findAll
 POST http://localhost:8080/series/findAll HTTP/1.1
 content-type: application/json
 
 
-###
+### add
 POST http://localhost:8080/series/add HTTP/1.1
 content-type: application/json
 
 {
 
-  "seriesTitle": "Series 1"
+  "seriesTitle": "Series 2"
 }
