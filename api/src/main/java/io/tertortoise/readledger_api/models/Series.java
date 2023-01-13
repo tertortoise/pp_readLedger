@@ -29,7 +29,7 @@ public class Series {
     @Column(name="series_title", nullable = false, columnDefinition = "text")
     private String seriesTitle;
 
-    @OneToMany(mappedBy = "series")
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore(false)
     private List<CommentSeries> comments = new ArrayList<CommentSeries>();
 

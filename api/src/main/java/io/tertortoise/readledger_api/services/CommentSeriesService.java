@@ -70,4 +70,12 @@ public class CommentSeriesService {
 
     }
 
+    public UUID deleteById(UUID id) {
+
+        repository.deleteById(id);
+
+        return id;
+
+    }
+
 }

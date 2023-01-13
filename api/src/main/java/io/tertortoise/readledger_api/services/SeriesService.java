@@ -1,5 +1,7 @@
 package io.tertortoise.readledger_api.services;
 
+import io.tertortoise.readledger_api.dtos.SeriesSlimDto;
+import io.tertortoise.readledger_api.mappers.SeriesMapper;
 import io.tertortoise.readledger_api.models.Series;
 import io.tertortoise.readledger_api.repositories.SeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import java.util.UUID;
 public class SeriesService {
     @Autowired
     private SeriesRepository seriesRepository;
+
+    @Autowired
+    private SeriesMapper seriesMapper;
 
     public List<Series> findAll() {
 
@@ -33,6 +38,34 @@ public class SeriesService {
         seriesRepository.save(series);
 
         return series.getId();
+
+    }
+
+    public UUID update(SeriesSlimDto seriesSlimDto) {
+
+        UUID id = seriesSlimDto.getId();
+
+        Optional<Series> seriesToUpdate = seriesRepository.findById(id);
+
+        if (seriesToUpdate.isPresent()) {
+
+            seriesRepository.save(seriesMapper.updateSeriesFromSeriesSlimDto(seriesSlimDto,
+                    seriesToUpdate.get()));
+
+            return id;
+
+        } else {
+
+            return null;
+
+        }
+
+    }
+    public UUID deleteById(UUID seriesId) {
+
+        seriesRepository.deleteById(seriesId);
+
+        return seriesId;
 
     }
 }

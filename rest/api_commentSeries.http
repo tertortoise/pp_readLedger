@@ -8,7 +8,7 @@ POST http://localhost:8080/comments-series/add HTTP/1.1
 content-type: application/json
 
 {
-  "commentContent": "correct comment to series 1",
+  "commentContent": "comment 2 to series 1",
   "seriesId": "2aed2e54-70ef-4a90-a7e3-259c1bba2402"
 }
 
@@ -28,4 +28,7 @@ content-type: application/json
   "id": "17e98420-2b84-4ab4-827c-4d4a36377232",
   "content": "new content"
 }
+
+### delete
+DELETE  http://localhost:8080/comments-series/9b54b007-239b-4fcb-ad93-25e79fa8d75d HTTP/1.1
 

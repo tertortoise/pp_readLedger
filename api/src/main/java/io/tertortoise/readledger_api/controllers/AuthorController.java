@@ -3,15 +3,16 @@ package io.tertortoise.readledger_api.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import io.tertortoise.readledger_api.dtos.AuthorSlimDto;
+import io.tertortoise.readledger_api.dtos.SeriesSlimDto;
 import jakarta.validation.Valid;
 
 import io.tertortoise.readledger_api.models.Author;
 import io.tertortoise.readledger_api.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("authors")
@@ -30,6 +31,24 @@ public class AuthorController {
     public UUID addResource(@Valid @RequestBody Author authorData) {
 
         return authorService.insert(authorData);
+
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<UUID> updateSeries(@Valid @RequestBody AuthorSlimDto authorSlimDto) {
+
+        UUID id =  authorService.update(authorSlimDto);
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
+
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<UUID> deleteById(@PathVariable UUID id) {
+
+        authorService.deleteById(id);
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
 
     }
 

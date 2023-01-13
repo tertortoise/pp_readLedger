@@ -5,14 +5,9 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-/**
- * wip change to dto pattern?
- * */
 @Getter
 @Setter
 public class CommentSeriesNew {
-
-//    private UUID id;
 
     private String commentContent;
 

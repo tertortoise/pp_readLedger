@@ -1,13 +1,6 @@
+### findAll
 POST http://localhost:8080/authors/findAll HTTP/1.1
 content-type: application/json
-
-###
-POST http://localhost:8080/authors/findByIds HTTP/1.1
-content-type: application/json
-
-{
-    "ids": ["d63407ab-a39b-4b76-a676-7c6143a5b35e", "952850d3-aae1-4671-b970-3f5efc647939"]
-}
 
 ###
 POST http://localhost:8080/authors/add HTTP/1.1
@@ -22,11 +15,11 @@ content-type: application/json
 ###
 DELETE http://localhost:8080/authors/5bd66088-f942-4833-bf3a-3dfe3a9f88c1 HTTP/1.1
 
-###
-PUT http://localhost:8080/authors/update HTTP/1.1
+### update
+POST http://localhost:8080/authors/update HTTP/1.1
 content-type: application/json
 
 {
-    
-    "description": "UPDATED description"
+    "id": "64d0062d-9274-4e89-86d3-913defaee6a7",
+    "name": "UPDATED name"
 }

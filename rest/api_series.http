@@ -2,6 +2,9 @@
 POST http://localhost:8080/series/findAll HTTP/1.1
 content-type: application/json
 
+{
+  "includeComments": true
+}
 
 ### add
 POST http://localhost:8080/series/add HTTP/1.1
@@ -11,3 +14,14 @@ content-type: application/json
 
   "seriesTitle": "Series 2"
 }
+### update
+POST http://localhost:8080/series/update HTTP/1.1
+content-type: application/json
+
+{
+"id": "2aed2e54-70ef-4a90-a7e3-259c1bba2402",
+"title": "Series 2 amended"
+}
+
+### delete
+DELETE http://localhost:8080/series/559cfd59-d917-4d3a-9d25-69b89424968a
