@@ -3,7 +3,7 @@ package io.tertortoise.readledger_api.controllers;
 import io.tertortoise.readledger_api.dtos.CommentSeriesUpdateDto;
 import io.tertortoise.readledger_api.mappers.CommentSeriesMapper;
 import io.tertortoise.readledger_api.models.CommentSeries;
-import io.tertortoise.readledger_api.dtos.CommentSeriesNew;
+import io.tertortoise.readledger_api.dtos.CommentSeriesCreate;
 import io.tertortoise.readledger_api.requests.RequestIds;
 import io.tertortoise.readledger_api.services.CommentSeriesService;
 import jakarta.validation.Valid;
@@ -34,21 +34,21 @@ public class CommentSeriesController {
     }
 
     @PostMapping("/findBySeries")
-    public List<CommentSeries> getCommentBySeries(@RequestBody RequestIds seriesIds) {
+    public List<CommentSeries> getCommentsBySeries(@RequestBody RequestIds seriesIds) {
 
         return commentsSeriesService.findAllBySeriesIds(seriesIds.getIds());
 
     }
 
     @PostMapping("/add")
-    public UUID addCommentSeries(@Valid @RequestBody CommentSeriesNew commentSeriesData) {
+    public UUID addEntity(@Valid @RequestBody CommentSeriesCreate commentSeriesData) {
 
         return commentsSeriesService.insert(commentSeriesData);
 
     }
 
     @PostMapping("/update")
-    public ResponseEntity<UUID> updateCommentSeries(@Valid @RequestBody CommentSeriesUpdateDto commentSeriesUpdateDto) {
+    public ResponseEntity<UUID> updateEntity(@Valid @RequestBody CommentSeriesUpdateDto commentSeriesUpdateDto) {
 
         UUID id = commentSeriesUpdateDto.getId();
 

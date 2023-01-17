@@ -1,0 +1,25 @@
+### findAll
+POST http://localhost:8080/books/findAll HTTP/1.1
+content-type: application/json
+
+### add
+POST http://localhost:8080/books/add HTTP/1.1
+content-type: application/json
+
+{
+
+  "bookTitle": "Book 2"
+}
+
+
+### delete
+DELETE http://localhost:8080/books/3cf32e6a-f38b-4cc6-878c-e4fee1e20260 HTTP/1.1
+
+### update
+POST http://localhost:8080/books/update HTTP/1.1
+content-type: application/json
+
+{
+  "id": "b5f9c9da-ba42-4748-9c4c-d9c1263f80bc",
+  "title": "Book 1 updated"
+}

@@ -1,10 +1,13 @@
 package io.tertortoise.readledger_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -24,6 +27,11 @@ public class Author {
     @NotBlank(message="author name is mandatory")
     @Column(name="author_name", nullable = false, columnDefinition = "text")
     private String authorName;
+
+    @ManyToMany(fetch = FetchType.LAZY,  cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "authors")
+    @JsonIgnore
+    private Set<Book> books = new HashSet<>();
 
     public Author(String authorName) {
 

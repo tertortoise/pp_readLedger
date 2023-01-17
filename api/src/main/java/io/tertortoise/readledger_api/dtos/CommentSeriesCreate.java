@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CommentSeriesNew {
+public class CommentSeriesCreate {
 
     private String commentContent;
 

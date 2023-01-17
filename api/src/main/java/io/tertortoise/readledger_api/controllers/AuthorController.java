@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import io.tertortoise.readledger_api.dtos.AuthorSlimDto;
-import io.tertortoise.readledger_api.dtos.SeriesSlimDto;
 import jakarta.validation.Valid;
 
 import io.tertortoise.readledger_api.models.Author;
@@ -21,21 +20,23 @@ public class AuthorController {
     private AuthorService authorService;
 
     @PostMapping("/findAll")
-    public List<Author> getAllAuthors() {
+    public List<Author> getAll() {
 
         return authorService.findAll();
 
     }
 
     @PostMapping("/add")
-    public UUID addResource(@Valid @RequestBody Author authorData) {
+    public UUID addEntity(@Valid @RequestBody Author authorData) {
+
+        // WIP author title
 
         return authorService.insert(authorData);
 
     }
 
     @PostMapping("/update")
-    public ResponseEntity<UUID> updateSeries(@Valid @RequestBody AuthorSlimDto authorSlimDto) {
+    public ResponseEntity<UUID> updateEntity(@Valid @RequestBody AuthorSlimDto authorSlimDto) {
 
         UUID id =  authorService.update(authorSlimDto);
 

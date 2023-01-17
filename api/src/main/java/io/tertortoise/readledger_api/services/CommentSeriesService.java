@@ -1,8 +1,7 @@
 package io.tertortoise.readledger_api.services;
 
-import io.tertortoise.readledger_api.mappers.CommentSeriesMapper;
 import io.tertortoise.readledger_api.models.CommentSeries;
-import io.tertortoise.readledger_api.dtos.CommentSeriesNew;
+import io.tertortoise.readledger_api.dtos.CommentSeriesCreate;
 import io.tertortoise.readledger_api.models.Series;
 import io.tertortoise.readledger_api.repositories.CommentSeriesRepository;
 import io.tertortoise.readledger_api.repositories.SeriesRepository;
@@ -39,10 +38,7 @@ public class CommentSeriesService {
 
     }
 
-    public UUID insert(CommentSeriesNew commentsSeriesData) {
-
-        // this should belong to controller
-        // service should be called only if series is found
+    public UUID insert(CommentSeriesCreate commentsSeriesData) {
 
         CommentSeries commentsSeries = new CommentSeries(commentsSeriesData.getCommentContent());
 

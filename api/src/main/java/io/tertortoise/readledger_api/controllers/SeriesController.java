@@ -1,9 +1,7 @@
 package io.tertortoise.readledger_api.controllers;
 
-import io.tertortoise.readledger_api.dtos.CommentSeriesUpdateDto;
 import io.tertortoise.readledger_api.dtos.SeriesSlimDto;
 import io.tertortoise.readledger_api.mappers.SeriesMapper;
-import io.tertortoise.readledger_api.models.CommentSeries;
 import io.tertortoise.readledger_api.models.Series;
 import io.tertortoise.readledger_api.requests.RequestSeriesGetCfg;
 import io.tertortoise.readledger_api.services.SeriesService;
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -28,7 +25,7 @@ public class SeriesController {
     private SeriesMapper seriesMapper;
 
     @PostMapping("/findAll")
-    public List<?> getAllSeries(@Valid @RequestBody RequestSeriesGetCfg requestSeriesGetCfg) {
+    public List<?> getAll(@Valid @RequestBody RequestSeriesGetCfg requestSeriesGetCfg) {
 
         List<Series> seriesList = seriesService.findAll();
 
@@ -45,7 +42,7 @@ public class SeriesController {
     }
 
     @PostMapping("/add")
-    public UUID addSeries(@Valid @RequestBody Series seriesData) {
+    public UUID addEntity(@Valid @RequestBody Series seriesData) {
 
         Series series = new Series(seriesData.getSeriesTitle());
 
@@ -54,7 +51,7 @@ public class SeriesController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<UUID> updateSeries(@Valid @RequestBody SeriesSlimDto seriesSlimDto) {
+    public ResponseEntity<UUID> updateEntity(@Valid @RequestBody SeriesSlimDto seriesSlimDto) {
 
         UUID id =  seriesService.update(seriesSlimDto);
 
