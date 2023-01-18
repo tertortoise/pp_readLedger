@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import io.tertortoise.readledger_api.dtos.BookCreate;
 import io.tertortoise.readledger_api.dtos.BookSlimDto;
+import io.tertortoise.readledger_api.dtos.BookUpdateDto;
 import io.tertortoise.readledger_api.models.Book;
 import io.tertortoise.readledger_api.services.BookService;
 import jakarta.validation.Valid;
@@ -45,9 +46,9 @@ public class BookController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<UUID> updateEntity(@Valid @RequestBody BookSlimDto bookSlimDto) {
+    public ResponseEntity<UUID> updateEntity(@Valid @RequestBody BookUpdateDto bookUpdateDto) {
 
-        UUID id =  bookService.update(bookSlimDto);
+        UUID id =  bookService.update(bookUpdateDto);
 
         return new ResponseEntity<>(id, HttpStatus.OK);
 

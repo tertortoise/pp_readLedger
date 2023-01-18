@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import io.tertortoise.readledger_api.dtos.BookCreate;
 import io.tertortoise.readledger_api.dtos.BookSlimDto;
+import io.tertortoise.readledger_api.dtos.BookUpdateDto;
 import io.tertortoise.readledger_api.mappers.BookMapper;
 import io.tertortoise.readledger_api.models.Author;
 import io.tertortoise.readledger_api.models.Book;
@@ -43,7 +44,7 @@ public class BookService {
 
         Set<UUID> authorIds = bookData.getAuthorIds();
 
-        Boolean authorsExist = authorRepository.existsAllById(authorIds);
+        Boolean authorsExist = authorRepository.existsAllByIdIn(authorIds);
 
         if (!authorsExist) {
 
@@ -55,7 +56,7 @@ public class BookService {
 
         Book book = new Book(bookData.getBookTitle());
 
-        book.setAuthors(authors); // wip should each athor be added via addAuthor or is it enough?
+        book.setAuthors(authors);
 
         repository.save(book);
 
@@ -63,24 +64,62 @@ public class BookService {
 
     }
 
-    public UUID update(BookSlimDto bookSlimDto) {
+    public UUID update(BookUpdateDto bookUpdateDto) {
 
-        UUID id = bookSlimDto.getId();
+        System.out.println(bookUpdateDto);
 
-        Optional<Book> bookToUpdateOpt = repository.findById(id);
+        UUID bookId = bookUpdateDto.getId();
 
-        if (bookToUpdateOpt.isPresent()) {
+        Optional<Book> bookToUpdateOpt = repository.findById(bookId);
 
-            repository.save(bookMapper.updateBookFromBookSlimDto(bookSlimDto,
-                    bookToUpdateOpt.get()));
-
-            return id;
-
-        } else {
+        if (bookToUpdateOpt.isEmpty()) {
 
             return null;
 
         }
+
+        String newTitle = bookUpdateDto.getBookTitle();
+
+        Set<UUID> authorIds = bookUpdateDto.getAuthorIds();
+
+        Boolean authorsExist = authorIds != null && authorIds.size() > 0;
+
+        if (authorsExist) {
+
+            authorsExist = authorRepository.existsAllByIdIn(authorIds);
+
+        }
+
+        if (newTitle == null && !authorsExist) {
+
+            return null;
+
+        }
+
+        BookSlimDto bookSlimDto = new BookSlimDto();
+
+        bookSlimDto.setId(bookId);
+
+        if (newTitle != null) {
+
+            bookSlimDto.setBookTitle(newTitle);
+
+        }
+
+        if (authorsExist) {
+
+            Set<Author> newAuthors = authorRepository.findByIdIn(authorIds);
+
+            bookSlimDto.setAuthors(newAuthors);
+
+        }
+
+
+        repository.save(bookMapper.updateBookFromBookSlimDto(bookSlimDto,
+                bookToUpdateOpt.get()));
+
+        return bookId;
+
 
     }
 

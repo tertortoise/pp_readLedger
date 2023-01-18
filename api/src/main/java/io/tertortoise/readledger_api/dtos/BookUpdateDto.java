@@ -1,24 +1,21 @@
 package io.tertortoise.readledger_api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
 import java.util.UUID;
-
 @Data
-public class BookCreate {
+public class BookUpdateDto {
+
+    @NotNull
+    private UUID id;
 
     @JsonProperty("title")
     private String bookTitle;
 
-    @Size(min = 1)
     @JsonProperty("authors")
     private Set<UUID> authorIds;
-
-    // seriesId: nullable
-    // status: enum
 
 }

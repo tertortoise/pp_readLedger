@@ -13,7 +13,7 @@ public interface AuthorRepository extends JpaRepository<Author, UUID> {
 
     List<Author> findAuthorsByBooksId(UUID bookId);
 
-    Boolean existsAllById(Set<UUID> ids);
+    Boolean existsAllByIdIn(Set<UUID> ids);
 
     Set<Author> findByIdIn(Set<UUID> id);
 

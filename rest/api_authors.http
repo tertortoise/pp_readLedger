@@ -2,18 +2,18 @@
 POST http://localhost:8080/authors/findAll HTTP/1.1
 content-type: application/json
 
-###
+### add
 POST http://localhost:8080/authors/add HTTP/1.1
 content-type: application/json
 
 {
     
-    "authorName": "Author 1"
+    "authorName": "Author 2"
 }
 
 
-###
-DELETE http://localhost:8080/authors/5bd66088-f942-4833-bf3a-3dfe3a9f88c1 HTTP/1.1
+### delete
+DELETE http://localhost:8080/authors/64d0062d-9274-4e89-86d3-913defaee6a7 HTTP/1.1
 
 ### update
 POST http://localhost:8080/authors/update HTTP/1.1
@@ -21,5 +21,5 @@ content-type: application/json
 
 {
     "id": "64d0062d-9274-4e89-86d3-913defaee6a7",
-    "name": "UPDATED name"
+    "name": "Author 1"
 }
