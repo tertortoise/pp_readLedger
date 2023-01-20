@@ -9,14 +9,15 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CommentSeriesCreate {
+public class CommentBookCreate {
 
     @NotNull
     @JsonProperty("comment")
     private String commentContent;
 
     @NotNull
-    @JsonProperty("series")
-    private UUID seriesId;
+    @JsonProperty("book")
+    private UUID bookId;
+
 
 }

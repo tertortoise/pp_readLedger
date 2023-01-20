@@ -12,12 +12,13 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.UUID;
 
 @Entity
-@Table(name = "comments_series")
+@Table(name = "comments_book")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentSeries {
+public class CommentBook {
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -29,26 +30,29 @@ public class CommentSeries {
     private String commentContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_series")
+    @JoinColumn(name = "fk_book")
     @JsonBackReference
-    private Series series;
+    private Book book;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CommentSeries)) return false;
-        return id != null && id.equals(((CommentSeries) o).getId());
+        if (!(o instanceof CommentBook)) return false;
+        return id != null && id.equals(((CommentBook) o).getId());
     }
- 
+
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
 
-    public CommentSeries(String commentContent) {
+    public CommentBook(String commentContent) {
 
         this.commentContent = commentContent;
 
     }
+
+
+
 
 }

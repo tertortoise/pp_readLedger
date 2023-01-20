@@ -38,25 +38,25 @@ public class CommentSeriesService {
 
     }
 
-    public UUID insert(CommentSeriesCreate commentsSeriesData) {
+    public UUID insert(CommentSeriesCreate commentsSeriesCreateData) {
 
-        CommentSeries commentsSeries = new CommentSeries(commentsSeriesData.getCommentContent());
+        UUID seriesId = commentsSeriesCreateData.getSeriesId();
 
-        UUID seriesId = commentsSeriesData.getSeriesId();
+        Optional<Series> series = seriesRepository.findById(seriesId);
 
-        Optional<Series> series = seriesRepository.findById(commentsSeriesData.getSeriesId());
+        if (!series.isPresent()) {
 
-        if (series.isPresent()) {
-
-            series.get().addComment(commentsSeries);
-
-            repository.save(commentsSeries);
-
-            return commentsSeries.getId();
+            return null;
 
         }
 
-        return null;
+        CommentSeries commentsSeries = new CommentSeries(commentsSeriesCreateData.getCommentContent());
+
+        series.get().addComment(commentsSeries);
+
+        repository.save(commentsSeries);
+
+        return commentsSeries.getId();
 
     }
 

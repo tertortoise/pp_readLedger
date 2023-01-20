@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CommentSeriesUpdateDto {
+public class CommentBookUpdateDto {
 
     @NotNull(message = "id should be provided for this request")
     @JsonProperty("id")

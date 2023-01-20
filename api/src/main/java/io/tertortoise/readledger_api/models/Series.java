@@ -36,7 +36,6 @@ public class Series {
     public void addComment(CommentSeries comment) {
 
         comments.add(comment);
-
         comment.setSeries(this);
 
     }

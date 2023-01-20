@@ -1,6 +1,7 @@
 package io.tertortoise.readledger_api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.tertortoise.readledger_api.models.BookStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -14,6 +15,8 @@ public class BookUpdateDto {
 
     @JsonProperty("title")
     private String bookTitle;
+
+    private BookStatus status;
 
     @JsonProperty("authors")
     private Set<UUID> authorIds;

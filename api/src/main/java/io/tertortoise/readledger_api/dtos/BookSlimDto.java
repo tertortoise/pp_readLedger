@@ -2,6 +2,7 @@ package io.tertortoise.readledger_api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.tertortoise.readledger_api.models.Author;
+import io.tertortoise.readledger_api.models.BookStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -15,6 +16,8 @@ public class BookSlimDto {
     private UUID id;
 
     private String bookTitle;
+
+    private BookStatus status;
 
     private Set<Author> authors;
 

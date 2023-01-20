@@ -8,19 +8,20 @@ content-type: application/json
 
 {
 
-  "title": "Book 2",
-  "authors": ["64d0062d-9274-4e89-86d3-913defaee6a7"]
+  "title": "Book 11",
+  "authors": ["64d0062d-9274-4e89-86d3-913defaee6a7"],
+  "status": "DONE"
 }
 
 
 ### delete
-DELETE http://localhost:8080/books/9d8536c0-e246-46d1-af52-626ccdccc571 HTTP/1.1
+DELETE http://localhost:8080/books/29123f28-a619-4782-991f-f8899f2b8645 HTTP/1.1
 
 ### update
 POST http://localhost:8080/books/update HTTP/1.1
 content-type: application/json
 
 {
-  "id": "29123f28-a619-4782-991f-f8899f2b8645",
-  "title": "Book 2"
+  "id": "328e509b-02de-4e6f-b077-dce8c26b28ee",
+  "status": "DROPPED"
 }

@@ -11,6 +11,7 @@ import io.tertortoise.readledger_api.dtos.BookUpdateDto;
 import io.tertortoise.readledger_api.mappers.BookMapper;
 import io.tertortoise.readledger_api.models.Author;
 import io.tertortoise.readledger_api.models.Book;
+import io.tertortoise.readledger_api.models.BookStatus;
 import io.tertortoise.readledger_api.repositories.AuthorRepository;
 import io.tertortoise.readledger_api.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,6 @@ public class BookService {
 
     public UUID insert(BookCreate bookData) {
 
-        /**
-         * wip
-         * check that authorIds exist
-         * existsAllByIdIn should do the trick
-         * if exist - add, if not - do not add
-         * */
-
         Set<UUID> authorIds = bookData.getAuthorIds();
 
         Boolean authorsExist = authorRepository.existsAllByIdIn(authorIds);
@@ -58,6 +52,13 @@ public class BookService {
 
         book.setAuthors(authors);
 
+        BookStatus bookStatus = bookData.getStatus() == null ? BookStatus.ACQUIRE :
+                bookData.getStatus();
+
+
+
+        book.setStatus(bookStatus);
+
         repository.save(book);
 
         return book.getId();
@@ -65,8 +66,6 @@ public class BookService {
     }
 
     public UUID update(BookUpdateDto bookUpdateDto) {
-
-        System.out.println(bookUpdateDto);
 
         UUID bookId = bookUpdateDto.getId();
 
@@ -80,6 +79,8 @@ public class BookService {
 
         String newTitle = bookUpdateDto.getBookTitle();
 
+        BookStatus newStatus = bookUpdateDto.getStatus();
+
         Set<UUID> authorIds = bookUpdateDto.getAuthorIds();
 
         Boolean authorsExist = authorIds != null && authorIds.size() > 0;
@@ -90,7 +91,7 @@ public class BookService {
 
         }
 
-        if (newTitle == null && !authorsExist) {
+        if (newStatus == null && newTitle == null && !authorsExist) {
 
             return null;
 
@@ -99,6 +100,8 @@ public class BookService {
         BookSlimDto bookSlimDto = new BookSlimDto();
 
         bookSlimDto.setId(bookId);
+
+        bookSlimDto.setStatus(newStatus);
 
         if (newTitle != null) {
 
@@ -115,8 +118,10 @@ public class BookService {
         }
 
 
-        repository.save(bookMapper.updateBookFromBookSlimDto(bookSlimDto,
-                bookToUpdateOpt.get()));
+        Book newBook = bookMapper.updateBookFromBookSlimDto(bookSlimDto,
+                bookToUpdateOpt.get());
+
+        repository.save(newBook);
 
         return bookId;
 

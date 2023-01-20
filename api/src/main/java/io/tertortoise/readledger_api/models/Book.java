@@ -1,13 +1,12 @@
 package io.tertortoise.readledger_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -24,8 +23,18 @@ public class Book {
     private UUID id;
 
     @NotBlank(message="book title is mandatory")
-    @Column(name="author_name", nullable = false, columnDefinition = "text")
+    @Column(name="book_title", nullable = false, columnDefinition = "text")
     private String bookTitle;
+
+    @Column(columnDefinition = "varchar(16) default 'ACQUIRE'")
+    @Enumerated(EnumType.STRING)
+    private BookStatus status;
+
+    /**
+     * wip
+     * seriesId maybe null, books should be deleted upon deleting series?
+     * ordinal - in series default 1?
+     * */
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "book_authors", joinColumns = {@JoinColumn(name = "book_id")},
@@ -50,8 +59,19 @@ public class Book {
             author.getBooks().remove(this);
 
         }
+    }
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore(false)
+    private List<CommentBook> comments = new ArrayList<CommentBook>();
+
+    public void addComment(CommentBook comment) {
+
+        comments.add(comment);
+        comment.setBook(this);
 
     }
+
 
     public Book(String bookTitle) {
 
