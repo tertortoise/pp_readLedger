@@ -21,6 +21,12 @@ public class BookCreate {
     @JsonProperty("authors")
     private Set<UUID> authorIds;
 
+    @JsonProperty("series")
+    private UUID seriesId;
+
+    private Integer ordinalInSeries;
+
+
 
     // seriesId: nullable
     // status: enum

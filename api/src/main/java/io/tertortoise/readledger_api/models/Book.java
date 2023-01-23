@@ -1,6 +1,6 @@
 package io.tertortoise.readledger_api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -14,6 +14,9 @@ import java.util.*;
 @Table(name = "books")
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Book {
 
     @Id
@@ -30,11 +33,13 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private BookStatus status;
 
-    /**
-     * wip
-     * seriesId maybe null, books should be deleted upon deleting series?
-     * ordinal - in series default 1?
-     * */
+    @Column
+    private Integer ordinalInSeries;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_series")
+    @JsonBackReference
+    private Series series;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "book_authors", joinColumns = {@JoinColumn(name = "book_id")},

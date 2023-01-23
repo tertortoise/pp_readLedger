@@ -8,9 +8,11 @@ content-type: application/json
 
 {
 
-  "title": "Book 11",
+  "title": "Book 14",
   "authors": ["64d0062d-9274-4e89-86d3-913defaee6a7"],
-  "status": "DONE"
+  "status": "DONE",
+  "series": "2aed2e54-70ef-4a90-a7e3-259c1bba2402",
+  "ordinalInSeries": 3
 }
 
 
@@ -22,6 +24,6 @@ POST http://localhost:8080/books/update HTTP/1.1
 content-type: application/json
 
 {
-  "id": "328e509b-02de-4e6f-b077-dce8c26b28ee",
-  "status": "DROPPED"
+  "id": "6982c1e5-aeda-4f15-9e99-7c4cf280e8da",
+  "setToStandalone": true
 }

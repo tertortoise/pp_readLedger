@@ -24,7 +24,9 @@ public class BookController {
     @PostMapping("/findAll")
     public List<Book> getAll() {
 
-        return bookService.findAll();
+        List<Book> books = bookService.findAll();
+
+        return books;
 
     }
 

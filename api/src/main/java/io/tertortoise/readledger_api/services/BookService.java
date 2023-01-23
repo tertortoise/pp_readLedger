@@ -12,8 +12,10 @@ import io.tertortoise.readledger_api.mappers.BookMapper;
 import io.tertortoise.readledger_api.models.Author;
 import io.tertortoise.readledger_api.models.Book;
 import io.tertortoise.readledger_api.models.BookStatus;
+import io.tertortoise.readledger_api.models.Series;
 import io.tertortoise.readledger_api.repositories.AuthorRepository;
 import io.tertortoise.readledger_api.repositories.BookRepository;
+import io.tertortoise.readledger_api.repositories.SeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class BookService {
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Autowired
+    private SeriesRepository seriesRepository;
 
     @Autowired
     private BookMapper bookMapper;
@@ -46,6 +51,22 @@ public class BookService {
 
         }
 
+        UUID seriesId = bookData.getSeriesId();
+
+        Optional<Series> series = null;
+
+        if (seriesId != null) {
+
+           series = seriesRepository.findById(seriesId);
+
+           if (series.isEmpty()) {
+
+               return null;
+
+           }
+
+        }
+
         Set<Author> authors = authorRepository.findByIdIn(authorIds);
 
         Book book = new Book(bookData.getBookTitle());
@@ -55,7 +76,9 @@ public class BookService {
         BookStatus bookStatus = bookData.getStatus() == null ? BookStatus.ACQUIRE :
                 bookData.getStatus();
 
+        book.setSeries(series.get());
 
+        book.setOrdinalInSeries(bookData.getOrdinalInSeries());
 
         book.setStatus(bookStatus);
 
@@ -91,11 +114,32 @@ public class BookService {
 
         }
 
-        if (newStatus == null && newTitle == null && !authorsExist) {
+        Boolean setToStandalone = bookUpdateDto.getSetToStandalone();
+
+        UUID seriesId = bookUpdateDto.getSeriesId();
+
+        Integer ordinalInSeries = bookUpdateDto.getOrdinalInSeries();
+
+        if (newStatus == null && newTitle == null && !authorsExist && setToStandalone == null && seriesId == null && ordinalInSeries == null) {
 
             return null;
 
         }
+
+        Optional<Series> series = Optional.empty();
+
+        if (setToStandalone != null && seriesId != null) {
+
+            series = seriesRepository.findById(seriesId);
+
+            if (series.isEmpty()) {
+
+                return null;
+
+            }
+
+        }
+
 
         BookSlimDto bookSlimDto = new BookSlimDto();
 
@@ -103,9 +147,17 @@ public class BookService {
 
         bookSlimDto.setStatus(newStatus);
 
-        if (newTitle != null) {
+        bookSlimDto.setBookTitle(newTitle);
 
-            bookSlimDto.setBookTitle(newTitle);
+        if (setToStandalone == null || setToStandalone == false) {
+
+            if (series.isPresent()) {
+
+                bookSlimDto.setSeries(series.get());
+
+            }
+
+            bookSlimDto.setOrdinalInSeries(ordinalInSeries);
 
         }
 
@@ -117,9 +169,15 @@ public class BookService {
 
         }
 
-
         Book newBook = bookMapper.updateBookFromBookSlimDto(bookSlimDto,
                 bookToUpdateOpt.get());
+
+        if (setToStandalone != null && setToStandalone == true) {
+
+            newBook.setSeries(null);
+            newBook.setOrdinalInSeries(null);
+
+        }
 
         repository.save(newBook);
 

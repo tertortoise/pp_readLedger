@@ -1,7 +1,9 @@
 package io.tertortoise.readledger_api.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -17,6 +19,9 @@ import java.util.ArrayList;
 @Table(name = "series")
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Series {
 
     @Id
@@ -33,10 +38,21 @@ public class Series {
     @JsonIgnore(false)
     private List<CommentSeries> comments = new ArrayList<CommentSeries>();
 
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore(false)
+    private List<Book> books = new ArrayList<Book>();
+
     public void addComment(CommentSeries comment) {
 
-        comments.add(comment);
+        this.comments.add(comment);
         comment.setSeries(this);
+
+    }
+
+    public void addBook(Book book) {
+
+        this.books.add(book);
+        book.setSeries(this);
 
     }
 

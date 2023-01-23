@@ -21,4 +21,11 @@ public class BookUpdateDto {
     @JsonProperty("authors")
     private Set<UUID> authorIds;
 
+    private Boolean setToStandalone;
+
+    @JsonProperty("series")
+    private UUID seriesId;
+
+    private Integer ordinalInSeries;
+
 }
