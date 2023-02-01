@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import io.tertortoise.readledger_api.dtos.BookCreate;
+import io.tertortoise.readledger_api.dtos.BookFullDto;
 import io.tertortoise.readledger_api.dtos.BookSlimDto;
 import io.tertortoise.readledger_api.dtos.BookUpdateDto;
+import io.tertortoise.readledger_api.mappers.BookMapper;
 import io.tertortoise.readledger_api.models.Book;
 import io.tertortoise.readledger_api.services.BookService;
 import jakarta.validation.Valid;
@@ -16,17 +18,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4000")
 @RequestMapping("books")
 public class BookController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private BookMapper bookMapper;
+
     @PostMapping("/findAll")
-    public List<Book> getAll() {
+    public List<BookFullDto> getAll() {
 
         List<Book> books = bookService.findAll();
 
-        return books;
+        return bookMapper.getListBookFullDtoFromListBook(books);
 
     }
 
