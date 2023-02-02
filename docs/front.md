@@ -33,6 +33,7 @@ const store = {
                 comments: [id],
             },
             syncStatus: number,
+            fetchStatus: number,
         }
     },
     authors: {
@@ -42,6 +43,7 @@ const store = {
                 name: string,
             },
             syncStatus: number,
+            fetchStatus: number,
         }
     },
     books: {
@@ -54,7 +56,8 @@ const store = {
                 seriesN: number || null,
                 comments: [id],
             },
-            syncStatus: number
+            syncStatus: number,
+            fetchStatus: number
         }
     },
     commentsSeries: {
@@ -64,6 +67,7 @@ const store = {
                 series: id,
             },
             syncStatus: number,
+            fetchStatus: number
         }
     },
     commentsBooks: {
@@ -73,6 +77,7 @@ const store = {
                 book: id,
             },
             syncStatus: number,
+            fetchStatus: number
         }
     }
 }
@@ -110,6 +115,5 @@ syncStatus:
 
 # engen
 
-https://medium.com/@suraj.kc/mobx-strategies-with-react-hooks-3de23932cb8c
-https://idanlevi2.medium.com/react-with-mobx-6-with-persist-and-without-decorators-bd7e5a0578d6
+https://nils-mehlhorn.de/posts/typescript-nodejs-react-ssr
 
