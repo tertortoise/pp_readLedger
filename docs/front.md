@@ -114,6 +114,7 @@ syncStatus:
 
 
 # engen
-
+C:\Users\stereshin\UserDocuments\T0\FIDDLE_REACT\ssr_chaigra
 https://nils-mehlhorn.de/posts/typescript-nodejs-react-ssr
+https://medium.com/deutsche-telekom-gurgaon/react-setup-with-typescript-webpack-5-ssr-code-splitting-and-hmr-e6c8a576fde4
 

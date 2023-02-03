@@ -1,6 +1,6 @@
 const isProd = process.env.NODE_ENV === 'production';
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -17,7 +17,7 @@ module.exports = {
                 test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 resolve: {
-                    extensions: ['.ts', '.tsx', '.js', '.json'],
+                    extensions: ['.ts', '.tsx', '.js', 'jsx', '.json'],
                 },
                 use: 'babel-loader',
             },
@@ -48,7 +48,7 @@ module.exports = {
     },
     devtool: isProd ? undefined : 'source-map',
     plugins: [
-        new HtmlWebpackPlugin({template: "public/index.html"}),
+        // new HtmlWebpackPlugin({template: "public/index.html"}),
         new MiniCssExtractPlugin(),
     ]
 
