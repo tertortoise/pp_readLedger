@@ -1,0 +1,10 @@
+{
+  "files": [
+    "server.js"
+  ],
+  "entrypoints": {
+    "server": [
+      "server.js"
+    ]
+  }
+}
