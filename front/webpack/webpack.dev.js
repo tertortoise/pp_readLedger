@@ -20,11 +20,11 @@ const clientCfg = {
             './src/client/index.tsx'
         ],
     },
-    devtool: 'inline-cheap-module-source-map',
+    devtool: 'source-map',
     output: {
         path: resolvePath(BUILD_DIR, 'client'),
         publicPath: '/client/',
-        filename: '[name].js',
+        filename: '[name].[contenthash:12].js',
         chunkFilename: '[name].js',
         assetModuleFilename: 'assets/[hash][ext][query]',
     },
@@ -34,7 +34,7 @@ const clientCfg = {
             verbose: true,
             dry: false,
             dangerouslyAllowCleanPatternsOutsideProject: true,
-            cleanStaleWebpackAssets: false,
+            // cleanStaleWebpackAssets: false,
             // cleanOnceBeforeBuildPatterns: ['**/*', '!/manifest-webpack.json'],
             // cleanAfterEveryBuildPatterns: ['**/*', '!dist/manifest-webpack.json']
         }),
@@ -105,7 +105,7 @@ const serverCfg = {
         assetModuleFilename: 'assets/[hash][ext][query]',
     },
     externals: [webpackNodeExternals()],
-    // devtool: 'source-map',
+    devtool: 'source-map',
 }
 
 module.exports = [merge(baseCfg, serverCfg), merge(baseCfg, clientCfg)]

@@ -20,23 +20,23 @@ const manifestPath = `${process.cwd()}/dist/client/manifest-client.json`;
 //read the manifest.json file
 const manifest = fs.readFileSync(manifestPath, 'utf-8');
 const manifestObj = JSON.parse(manifest);
-const files = manifestObj.files as string[];
+const files = manifestObj.entrypoints.client as string[];
 
-const cssRegex = /\w*\.css$/i;
-const scriptRegex = /\w*\.js$/i;
+const cssRegex = /\.css$/i;
+const scriptRegex = /\.js$/i;
 
 let cssTags: string = '';
 let scriptTags: string = '';
 
 function genScriptTag(src: string) {
   
-  return `<script async src="client/${src}"></script>`
+  return `<script async src="/client/${src}"></script>`
   
 }
 
 function genCssTag(href: string) {
   
-  return `<link  rel="stylesheet" href="client/${href}">`
+  return `<link  rel="stylesheet" href="/client/${href}">`
   
 }
 
@@ -60,6 +60,7 @@ function renderHtmlTemplate(reactContent: string, emotionCss: string) {
     <html lang="en">
       <head>
         <title>My page</title>
+        <link rel="icon" href="/images/favicon.ico" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 <!--        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />-->
         ${cssTags}
@@ -70,6 +71,11 @@ function renderHtmlTemplate(reactContent: string, emotionCss: string) {
       <h1>hello!</h1>
         <div id="root">${reactContent}</div>
         ${scriptTags}
+        <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('DSL listener in root')
+        })
+</script>
       </body>
     </html>
   `;
@@ -80,8 +86,12 @@ export default function (req: express.Request, res: express.Response) {
   
   const {extractCriticalToChunks, constructStyleTagsFromChunks} = createEmotionServer(cache);
   
-  const reactContent = renderToString(<App/>)
-
+  const reactContent = renderToString(
+    <StaticRouter location={req.path}>
+      <App/>
+    </StaticRouter>
+  )
+  
   const emotionChunks = extractCriticalToChunks(reactContent);
   const emotionCss = constructStyleTagsFromChunks(emotionChunks);
   res.send(renderHtmlTemplate(reactContent, emotionCss));

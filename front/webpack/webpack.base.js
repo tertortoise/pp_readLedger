@@ -1,5 +1,8 @@
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+
+
 const scriptExtensions = /\.(tsx|ts|js|jsx|mjs)$/;
 const imageExtensions = /\.(bmp|gif|jpg|jpeg|png)$/;
 const fontsExtension = /\.(eot|otf|ttf|woff|woff2)$/;
@@ -34,6 +37,11 @@ module.exports = {
         ],
     },
     plugins: [
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({filename: '[name].[contenthash:12].css'}),
+        new CopyPlugin({
+            patterns: [
+                { from: "public/images", to: "../images" },
+            ],
+        }),
     ]
 };

@@ -27,7 +27,7 @@ controls (edit, delete - disabled if there are books, addBook with predefined ti
 const store = {
     series: {
         [id]: {
-            data: {
+            ['dataLocalCommitted/dataServer']: {
                 id: id,
                 title: string,
                 comments: [id],

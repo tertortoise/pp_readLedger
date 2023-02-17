@@ -31,7 +31,7 @@ app.use(compression());
 app.use(express.static("dist"));
 
 app.get("*", (req: express.Request, res: express.Response) => {
-  
+  console.log(req.path)
   try {
   
     renderHtmlPage(req, res);
